@@ -77,48 +77,6 @@ FuelWatchMobile.haversine_optim = function(lat1, lon1, lat2, lon2) {
 	return R2 * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
 };
 
-/*
-var geocoder;
-var map;
-var infowindow = new google.maps.InfoWindow();
-var marker;
-function initialize() {
-	geocoder = new google.maps.Geocoder();
-	var latlng = new google.maps.LatLng(40.730885,-73.997383);
-	var myOptions = {
-		zoom: 8,
-		center: latlng,
-		mapTypeId: 'roadmap'
-	};
-	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-}
-
-FuelWatchMobile.mapSomething = function() {
-	var input = document.getElementById("latlng").value;
-	var latlngStr = input.split(",",2);
-	var lat = parseFloat(latlngStr[0]);
-	var lng = parseFloat(latlngStr[1]);
-	var latlng = new google.maps.LatLng(lat, lng);
-	geocoder.geocode({'latLng': latlng}, function(results, status) {
-		if (status == google.maps.GeocoderStatus.OK) {
-			if (results[1]) {
-				map.setZoom(11);
-				marker = new google.maps.Marker({
-						position: latlng,
-						map: map
-				});
-				infowindow.setContent(results[1].formatted_address);
-				infowindow.open(map, marker);
-			} else {
-				alert("No results found");
-			}
-		} else {
-			alert("Geocoder failed due to: " + status);
-		}
-	});
-}
-*/
-
 FuelWatchMobile.locationFail = function(error) {
 	console.log('Location service not working.');
 	FuelWatchMobile.debugText('Location service failed.');
@@ -138,10 +96,11 @@ FuelWatchMobile.locationFail = function(error) {
 	}
 };
 
-FuelWatchMobile.getXMLData = function(suburbEsc,fuelTypeEsc,ftText) {
+FuelWatchMobile.getXMLData = function(suburbEsc,fuelTypeEsc,ftText,callback) {
 	var fwURL = 'http%3A%2F%2Fwww.fuelwatch.wa.gov.au%2Ffuelwatch%2FfuelWatchRSS%3FSuburb%3D' + suburbEsc + fuelTypeEsc;
 	console.log("FW-URL: " + fwURL);
-	FuelWatchMobile.createResultsView();
+	// Array to collect results objects
+	var resultsArray = [];
 	$.get("http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20xml%20where%20url%3D'" + fwURL + "'",
 		function(data) {
 			// Local Storage setup variables
@@ -151,8 +110,6 @@ FuelWatchMobile.getXMLData = function(suburbEsc,fuelTypeEsc,ftText) {
 			var sd = sds.split('/');
 			var sDate = Date.parse(sd[2]+'-'+sd[1]+'-'+sd[0]);
 			console.log('Date: ' + sDate.toString());
-			// Array to collect results objects
-			var resultsArray = [];
 			$(data).find('item').each(function() {
 				var tradingName = $(this).find('trading-name').text();
 				var tNameCompressed = tradingName.toLowerCase().replace(/ /g, '-').replace(/\'/g, '-');
@@ -174,9 +131,22 @@ FuelWatchMobile.getXMLData = function(suburbEsc,fuelTypeEsc,ftText) {
 				};
 				resultsArray.push(resultsObject);
 			});
-			FuelWatchMobile.buildResultsList(resultsArray);
+			//console.log('Callback fires here');
+			callback(resultsArray);
 		},"xml"
 	);
+};
+
+FuelWatchMobile.setContainerHeight = function(){
+	var h = $(window).height() + 'px';
+	$('.container').css('height',h);
+};
+
+FuelWatchMobile.createResultsView = function() {
+	var resultListSection = '<section id="results"><header><h1>Results</h1><div class="back-button"><a href="#" title="Back" class="back button">Back</a></div></header><div class="container"><div class="content-wrapper"><ul class="resultList"></ul></div></div></section>';
+	$('section#search').after(resultListSection);
+	FuelWatchMobile.setContainerHeight();
+	setTimeout(function() { $('#results').toggleClass('current'); }, 200);
 	// Event listener for back button, goes back to top section and removes current results section
 	$('a.back').click(function(e) {
 		e.preventDefault();
@@ -189,12 +159,6 @@ FuelWatchMobile.getXMLData = function(suburbEsc,fuelTypeEsc,ftText) {
 			setTimeout(function() { $('#results').remove(); }, 300);
 		}
 	});
-};
-
-FuelWatchMobile.createResultsView = function() {
-	var resultListSection = '<section id="results"><header><h1>Results</h1><div class="back-button"><a href="#" title="Back" class="back button">Back</a></div></header><div class="container"><div class="content-wrapper"><ul class="resultList"></ul></div></div></section>';
-	$('section#search').after(resultListSection);
-	setTimeout(function() { $('#results').toggleClass('current'); }, 200);
 };
 
 FuelWatchMobile.buildResultsList = function(resultsArray) {
@@ -218,12 +182,13 @@ FuelWatchMobile.buildResultsList = function(resultsArray) {
 
 FuelWatchMobile.detailsView = function(details) {
 	var staticMapURL = "http://maps.googleapis.com/maps/api/staticmap?";
-	var staticMapParams = "zoom=17&size=500x250&scale=2&sensor=true&markers=color:red%7C";
+	var staticMapParams = "zoom=17&size=500x250&scale=2&sensor=true&markers=icon:http://www.commerce.wa.gov.au/fwoom/images/fillingstationdefault.png%7C";
 	var staticMapMarker = details.latitude + "," + details.longitude;
 	var mapImgSrc = staticMapURL + staticMapParams + staticMapMarker;
 	var mapLink = "http://maps.google.com.au/maps?q=" + staticMapMarker;
 	var detailsViewSection = '<section id="detailsView"><header><h1>Details</h1><div class="back-button"><a href="#" title="Back" class="button detailsBack">Back</a></div></header><div class="container"><div class="content-wrapper"><div class="map-container"><a href="'+ mapLink + '" title="Link to map of ' + details.tradingname + '"><img src="' + mapImgSrc + '" alt="Map of ' + details.tradingname + '"/></a></div><div class="price-distance-container"><span class="price"><h2>' + details.price + '</h2></span><span class="distance"><h2>' + details.price + '</h2></span></div><address><h3>' + details.tradingname + '</h3>' + details.address + ', ' + details.suburb + '<br />' + details.phone + '</address><div class="directions"><a href="' + mapLink + '" title="Link to map of ' + details.tradingname + '">Get directions</a></div></div></section>';
 	$('section#results').after(detailsViewSection);
+	FuelWatchMobile.setContainerHeight();
 	setTimeout(function() { $('#detailsView').toggleClass('current'); }, 200);
 	$('a.detailsBack').click(function(e) {
 		e.preventDefault();
@@ -232,10 +197,75 @@ FuelWatchMobile.detailsView = function(details) {
 	});
 };
 
-FuelWatchMobile.mapView = function() {
-	// body...
+FuelWatchMobile.createMapView = function() {
+	var mapSection = '<section id="map"><header><h1>Map</h1><div class="back-button"><a href="#" title="Back" class="back button">Back</a></div></header><div class="container">Map goes here.</div></section>';
+	$('section#search').after(mapSection);
+	FuelWatchMobile.setContainerHeight();
+	setTimeout(function() { $('#map').toggleClass('current'); }, 200);
+	$('a.back').click(function(e) {
+		e.preventDefault();
+		$('section#map').toggleClass('current');
+		$('#home').toggleClass('current');
+		setTimeout(function() { $('#map').remove(); }, 300);
+	});
 };
 
+FuelWatchMobile.buildMap = function() {
+	// some random function bits
+	/*
+	var geocoder;
+	var map;
+	var infowindow = new google.maps.InfoWindow();
+	var marker;
+	function initialize() {
+		geocoder = new google.maps.Geocoder();
+		var latlng = new google.maps.LatLng(40.730885,-73.997383);
+		var myOptions = {
+			zoom: 8,
+			center: latlng,
+			mapTypeId: 'roadmap'
+		};
+		map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+	}
+
+	FuelWatchMobile.mapSomething = function() {
+		var input = document.getElementById("latlng").value;
+		var latlngStr = input.split(",",2);
+		var lat = parseFloat(latlngStr[0]);
+		var lng = parseFloat(latlngStr[1]);
+		var latlng = new google.maps.LatLng(lat, lng);
+		geocoder.geocode({'latLng': latlng}, function(results, status) {
+			if (status == google.maps.GeocoderStatus.OK) {
+				if (results[1]) {
+					map.setZoom(11);
+					marker = new google.maps.Marker({
+							position: latlng,
+							map: map
+					});
+					infowindow.setContent(results[1].formatted_address);
+					infowindow.open(map, marker);
+				} else {
+					alert("No results found");
+				}
+			} else {
+				alert("Geocoder failed due to: " + status);
+			}
+		});
+	}
+	*/
+};
+
+FuelWatchMobile.getLocation = function(){
+	if (navigator.geolocation) {
+		// Safari waits a long time to get an accurate position, often failing if timeout is too low :-/
+		// navigator.geolocation.getCurrentPosition(FuelWatchMobile.locationSuccess, FuelWatchMobile.locationFail, { timeout: 30000, maximumAge: 0 });
+		// watchPosition can't really be used as we need a quick position fix :-/
+		// navigator.geolocation.watchPosition(FuelWatchMobile.locationSuccess, FuelWatchMobile.locationFail);
+		navigator.geolocation.getCurrentPosition(FuelWatchMobile.locationSuccess, FuelWatchMobile.locationFail);
+	} else {
+		console.log('Location not supported in this browser.');
+	}
+};
 
 $(document).ready(function(){
 
@@ -247,23 +277,34 @@ $(document).ready(function(){
 		var ftText = (fuelType > 1) ? $('#fueltype option:selected').text() : 'ULP';
 		console.log('Fuel Type: ' + fuelType + ' - ' + ftText);
 		var fuelTypeEsc = encodeURIComponent('&Product=' + fuelType);
-		FuelWatchMobile.getXMLData(suburbEsc,fuelTypeEsc,ftText);
 		$('#suburb').blur();
+		// Below code uses callback (final param) on getXMLData funciton to say which results type
+		// to load up after executing and getting data.
+		var resultsType = $('#resultsType').val();
+		if (resultsType === 'list') {
+			FuelWatchMobile.createResultsView();
+			FuelWatchMobile.getXMLData(suburbEsc,fuelTypeEsc,ftText,FuelWatchMobile.buildResultsList);
+		} else {
+			FuelWatchMobile.createMapView();
+			// Doesn't work yet until DR writes map-generating code and CE writes CSS.
+			FuelWatchMobile.getXMLData(suburbEsc,fuelTypeEsc,ftText,FuelWatchMobile.buildMap);
+		}
 		return false;
 	});
 
 	$('#findMeNow').click(function(){
 		console.log('Find Me button clicked.');
 		// FuelWatchMobile.debugText('Find Me button clicked');
-		if (navigator.geolocation) {
-			// Safari waits a long time to get an accurate position, often failing if timeout is too low :-/
-			// navigator.geolocation.getCurrentPosition(FuelWatchMobile.locationSuccess, FuelWatchMobile.locationFail, { timeout: 30000, maximumAge: 0 });
-			// watchPosition can't really be used as we need a quick position fix :-/
-			// navigator.geolocation.watchPosition(FuelWatchMobile.locationSuccess, FuelWatchMobile.locationFail);
-			navigator.geolocation.getCurrentPosition(FuelWatchMobile.locationSuccess, FuelWatchMobile.locationFail);
-		} else {
-			console.log('Location not supported in this browser.');
-		}
+		$('input#resultsType').val('list');
+		FuelWatchMobile.getLocation();
+		return false;
+	});
+
+	$('#mapNearby').click(function(){
+		console.log('Map Nearby button clicked.');
+		// FuelWatchMobile.debugText('Map Nearby button clicked');
+		$('input#resultsType').val('map');
+		FuelWatchMobile.getLocation();
 		return false;
 	});
 
