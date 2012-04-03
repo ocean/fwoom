@@ -31,31 +31,32 @@
           / %form{:id => 'searchForm', :action => 'search.jspx'}
           / %button{:type => 'submit', :id => 'submitterator', :name => 'submitterator'} Advanced Search   
   %section#search
-    .top-menu
+    %header
       %h1 Search
       .back-button
         %a.home.button{:href => '#'} Home
-    .content-container
-      %form{:id => 'searchForm', :action => 'search.jspx'}
-        .input-container
-          %ul
-            %li 
-              %input{:id => "suburb", :name => "suburb", :type => "text", :placeholder => "Suburb"}
-            %li
-              %select{:id => "fueltype", :name => "fueltype"}
-                %option{:value => "", :selected => "selected", :disabled => "disabled"} Select Fuel
-                %option{:value => "1"} Unleaded
-                %option{:value => "2"} Premium Unleaded
-                %option{:value => "4"} Diesel
-                %option{:value => "5"} LPG
-                %option{:value => "6"} 98 RON
-                %option{:value => "7"} B20
-            %li
-              %select
-                %option{:value => "", :selected => "selected", :disabled => "disabled"} Surrounding
-                %option{:value => "1"} Yes
-                %option{:value => "1"} No
-        .button-container
-          %button{:type => 'submit', :id => 'submitterator', :name => 'submitterator'} Find Fuel Prices
+    .container
+      .content-wrapper
+        %form{:id => 'searchForm', :action => 'search.jspx'}
+          .input-container
+            %ul
+              %li 
+                %input{:id => "suburb", :name => "suburb", :type => "text", :placeholder => "Suburb"}
+              %li
+                %select{:id => "fueltype", :name => "fueltype"}
+                  %option{:value => "", :selected => "selected", :disabled => "disabled"} Select Fuel
+                  %option{:value => "1"} Unleaded
+                  %option{:value => "2"} Premium Unleaded
+                  %option{:value => "4"} Diesel
+                  %option{:value => "5"} LPG
+                  %option{:value => "6"} 98 RON
+                  %option{:value => "7"} B20
+              %li
+                %select
+                  %option{:value => "", :selected => "selected", :disabled => "disabled"} Surrounding
+                  %option{:value => "1"} Yes
+                  %option{:value => "1"} No
+          .button-container
+            %button{:type => 'submit', :id => 'submitterator', :name => 'submitterator'} Find Fuel Prices
 
 

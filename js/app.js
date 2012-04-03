@@ -192,16 +192,16 @@ FuelWatchMobile.getXMLData = function(suburbEsc,fuelTypeEsc,ftText) {
 };
 
 FuelWatchMobile.createResultsView = function() {
-	var resultListSection = '<section id="results"><div class="top-menu"><h1>Results</h1><div class="back-button"><a href="#" title="Back" class="back button">Back</a></div></div><ul class="resultList"></ul></section>';
+	var resultListSection = '<section id="results"><header><h1>Results</h1><div class="back-button"><a href="#" title="Back" class="back button">Back</a></div></header><div class="container"><div class="content-wrapper"><ul class="resultList"></ul></div></div></section>';
 	$('section#search').after(resultListSection);
-	setTimeout(function() { $('#results').toggleClass('current'); }, 100);
+	setTimeout(function() { $('#results').toggleClass('current'); }, 200);
 };
 
 FuelWatchMobile.buildResultsList = function(resultsArray) {
 	// Holder for HTML of results list.
 	var resultListHTMLString = '';
 	$.each(resultsArray,function(i,o){
-		var resultItem = '<li><a href="#/' + o.tradingnamecompressed + '" data-tradingname="' + o.tradingname + '" data-address="' + o.address + '" data-suburb="' + o.suburb + '" data-price="' + o.price + '" data-latitude="' + o.latitude + '" data-longitude="' + o.longitude + '" data-phone="' + o.phone + '"><span class="information"><h1>' + o.tradingname + '</h1><p>' + o.address + '<br />' + o.suburb + '</p></span><span class="price"><h1>' + o.price + '</h1></span></a></li>';
+		var resultItem = '<li><a href="#/' + o.tradingnamecompressed + '" data-tradingname="' + o.tradingname + '" data-address="' + o.address + '" data-suburb="' + o.suburb + '" data-price="' + o.price + '" data-latitude="' + o.latitude + '" data-longitude="' + o.longitude + '" data-phone="' + o.phone + '"><span class="primary"><h3>' + o.tradingname + '</h3><h4>' + o.address + ', ' + o.suburb + '</h4></span><span class="secondary"><div class="button price">' + o.price + '<small> &#162;/l</small></div><div class="button distance">' + '2.4' + '<small>km</small>' + '</div><div class="button type">' + 'ULP' + '</div></a></li>';
 		resultListHTMLString += resultItem;
 	});
 	$('ul.resultList').append(resultListHTMLString);
@@ -218,13 +218,13 @@ FuelWatchMobile.buildResultsList = function(resultsArray) {
 
 FuelWatchMobile.detailsView = function(details) {
 	var staticMapURL = "http://maps.googleapis.com/maps/api/staticmap?";
-	var staticMapParams = "zoom=17&size=500x250&scale=2&sensor=true&markers=color:red%7Csize:normal%7C";
+	var staticMapParams = "zoom=17&size=500x250&scale=2&sensor=true&markers=color:red%7C";
 	var staticMapMarker = details.latitude + "," + details.longitude;
 	var mapImgSrc = staticMapURL + staticMapParams + staticMapMarker;
 	var mapLink = "http://maps.google.com.au/maps?q=" + staticMapMarker;
-	var detailsViewSection = '<section id="detailsView"><div class="top-menu"><h1>Details</h1><div class="back-button"><a href="#" title="Back" class="button detailsBack">Back</a></div></div><div class="content-container"><div class="map-container"><a href="'+ mapLink + '" title="Link to map of ' + details.tradingname + '"><img src="' + mapImgSrc + '" alt="Map of ' + details.tradingname + '"/></a></div><div class="price-distance-container"><span class="price"><h2>' + details.price + '</h2></span><span class="distance"><h2>' + details.price + '</h2></span></div><address><h3>' + details.tradingname + '</h3>' + details.address + ', ' + details.suburb + '<br />' + details.phone + '</address><div class="directions"><a href="' + mapLink + '" title="Link to map of ' + details.tradingname + '">Get directions</a></div></section>';
+	var detailsViewSection = '<section id="detailsView"><header><h1>Details</h1><div class="back-button"><a href="#" title="Back" class="button detailsBack">Back</a></div></header><div class="container"><div class="content-wrapper"><div class="map-container"><a href="'+ mapLink + '" title="Link to map of ' + details.tradingname + '"><img src="' + mapImgSrc + '" alt="Map of ' + details.tradingname + '"/></a></div><div class="price-distance-container"><span class="price"><h2>' + details.price + '</h2></span><span class="distance"><h2>' + details.price + '</h2></span></div><address><h3>' + details.tradingname + '</h3>' + details.address + ', ' + details.suburb + '<br />' + details.phone + '</address><div class="directions"><a href="' + mapLink + '" title="Link to map of ' + details.tradingname + '">Get directions</a></div></div></section>';
 	$('section#results').after(detailsViewSection);
-	setTimeout(function() { $('#detailsView').toggleClass('current'); }, 100);
+	setTimeout(function() { $('#detailsView').toggleClass('current'); }, 200);
 	$('a.detailsBack').click(function(e) {
 		e.preventDefault();
 		$('section#detailsView').toggleClass('current');
