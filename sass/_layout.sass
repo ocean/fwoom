@@ -1,0 +1,368 @@
+@import "compass"
+
+* 
+  margin: 0
+  outline: 0
+  padding: 0
+  +box-sizing(border-box)
+
+body
+  background: url('../images/main-bg-map.png') #2f3742
+  background-size: 320px, 460px
+  color: #5a5a5a
+  height: 100%
+  min-height: 416px
+  overflow: hidden
+  position: absolute
+  width: 100%
+  +experimental(transform-style, preserve-3d)
+  +perspective(800)
+  +experimental(user-select, none)
+  -webkit-text-size-adjust: none
+  
+  section
+    background: #f9f9f9
+    height: 100%
+    overflow-x: hidden
+    overflow: hidden
+    position: absolute
+    width: 100%%
+    +box-shadow(rgba(black, .5) 0px 0px 5px)
+    +experimental(transform, translate3d(120%,0%,0))
+    +experimental(transform-style, preserve-3d)
+    +single-transition(all, 0.5s, ease-in-out)
+
+
+    &.current
+      +experimental(transform, translate3d(0%,0%,0))
+
+  .button-container
+    background: #e9eaef    
+    border: 1px solid #c2c3c6
+    color: #fff
+    float: left
+    font-weight: bold
+    height: 100%
+    line-height: 28px
+    margin-bottom: 10px
+    overflow: hidden
+    padding: 3px
+    text-align: center
+    text-decoration: none
+    width: 100%
+    +border-radius(4px)
+    +box-shadow(inset 0 2px 1px #dadbdf, 0 1px 1px white)
+          
+    button
+      background-size: 44px, 88px
+      background: url('../images/button-icons-sprite.png') 0px -45px #4aa3c9  no-repeat  
+      border: 1px solid #449bc4       
+      color: #fff
+      font-size: 18px
+      font-weight: bold
+      height: 44px
+      line-height: 44px
+      padding-left: 45px      
+      text-align: left
+      text-shadow: #3b819f 0px 1px 1px
+      width: 100%
+      +border-radius(5px)             
+      +box-shadow(inset 0 1px 0px #8cc1d9, 0 1px 0px rgba(0, 0, 0, .1))
+
+  .input-container
+    background: #e9eaef    
+    border: 1px solid #c2c3c6     
+    color: #fff
+    float: left
+    font-weight: bold
+    height: 100%
+    line-height: 28px
+    margin-bottom: 10px  
+    overflow: hidden
+    padding: 3px
+    text-align: center
+    text-decoration: none
+    width: 100%
+    +border-radius(5px)
+    +box-shadow(inset 0 2px 1px #dadbdf, 0 1px 1px white)
+
+    ul       
+      border: 1px solid #ccc
+      margin: 0px
+      overflow: hidden
+      +border-radius(5px)
+
+      li
+        border-bottom: 1px solid #ccc
+        background: #fff
+
+        &:first-child
+          +border-radius(5px 5px 0px 0px )
+
+        &:last-child
+          border: 0px
+          +border-radius(0px 0px 5px 5px )
+          
+
+
+
+    input, select
+      background: #fff
+      border: 0px
+      color: #404040
+      font-size: 14px
+      height: 38px
+      padding: 0px 10px
+      width: 100%
+      +appearance(none)     
+      +border-radius(4px)      
+
+    select
+      background: url('../images/select-arrow-down.png') no-repeat center right  #fff
+      background-size: 32px, 11px
+
+
+
+
+section
+  .top-menu
+    height: 46px
+    width: 100%
+    border-bottom: 1px solid #2f3742
+    +background-image(linear-gradient(#2d82c3, #1d6c9a))
+    +text-shadow(#1d5d89 0px -1px -1px)
+
+    h1
+      color: #fff
+      font-size: 18px
+      font-weight: bold
+      line-height: 44px
+      text-align: center
+
+    .button
+      border: 1px solid #054a71  
+      color: #fff
+      font-weight: bold
+      height: 30px
+      left: 10px
+      line-height: 28px
+      position: absolute
+      text-align: center
+      text-decoration: none
+      top: 7px
+      width: 60px
+      +background-image(linear-gradient(#2d83c4, #1d6c9a))  
+      +border-radius(4px)
+      +box-shadow(inset 0 1px 1px rgba(255, 255, 255, .21), 0 1px 0px rgba(255, 255, 255, .2))
+
+
+  &#home
+    margin-left: 0px
+    +border-radius(5px 5px 5px 5px)
+    +experimental(transform, translate3d(0%,0%,0))  
+    nav
+      margin-top: 100px
+      ul
+        border-bottom: 1px solid #fff        
+        border-top: 1px solid #ccc
+        height: auto
+        width: 100%
+
+        li a
+          border-bottom: 1px solid #ccc
+          border-top: 1px solid #fff
+          color: #484848
+          display: block
+          font-size: 16px
+          font-weight: bold
+          height: 55px
+          line-height: 55px
+          padding-left: 50px
+          +text-shadow(#fff 0px 1px 1px)
+
+        li
+          &#near-me
+            background: url('../images/big-button-sprites.png') no-repeat 7px 8px
+            background-size: 35px, 153px
+          &#map
+            background: url('../images/big-button-sprites.png') no-repeat 7px -48px
+            background-size: 35px, 153px
+          &#search
+            background: url('../images/big-button-sprites.png') no-repeat 7px -105px
+            background-size: 35px, 153px                        
+    &.current
+      margin: 0px
+      +experimental(transform, translate3d(39%,0%,0))      
+  &#search  
+    +box-shadow(0 0px 5px rgba(black, .5))
+    .content-container
+      margin: 10px
+
+
+
+
+  &#results          
+    ul
+      background: url('../images/fw-loading-test.gif') no-repeat center center
+      height: 100%
+      min-height: 420px
+      padding-bottom: 50px 
+      li
+        border-bottom: 1px solid #dcdde1  
+        height: 74px
+        overflow: hidden
+        padding: 10px 10px
+        +text-shadow(#fff 0px 1px 1px)
+
+        &:nth-child(even)
+          background: #fff
+
+        span.price
+          background: #e9eaef    
+          border: 1px solid #c2c3c6
+          color: #fff
+          float: right
+          font-weight: bold
+          height: 36px
+          line-height: 28px
+          margin-left: 2%
+          margin-top: 8px
+          max-width: 100px
+          padding: 3px
+          text-align: center
+          text-decoration: none
+          width: 30%
+          +border-radius(5px)
+          +box-shadow(inset 0 2px 1px #dadbdf, 0 1px 1px white)
+
+
+          h1
+            background: #4aa3c9
+            border: 1px solid #449bc4        
+            color: #fff
+            font-size: 18px
+            font-weight: bold
+            height: 28px
+            line-height: 26px
+            text-align: center
+            width: 100%
+            +border-radius(3px)             
+            +box-shadow(inset 0 1px 1px #8cc1d9, 0 1px 0px rgba(0, 0, 0, .1))
+            +text-shadow(#3b819f 0px 1px 1px)
+
+
+            
+
+        span.information
+          float: left
+          height: 43px
+          padding-right: 2%
+          width: 68%
+
+          h1
+            color: #404040
+            font-size: 16px
+            font-weight: bold
+            line-height: 18px
+            overflow: hidden
+            white-space: nowrap
+            width: 98%
+            +experimental(text-overflow, ellipsis)
+          p
+            color: #818181
+            font-size: 13px
+            font-weight: normal
+            height: auto
+            line-height: 15px  
+            overflow: hidden
+            white-space: nowrap
+            width: 100%
+            +experimental(text-overflow, ellipsis)            
+  &#details
+    display: none
+
+
+input::-webkit-input-placeholder
+  color:  #404040
+input:-moz-placeholder
+  color:  #404040
+
+
+
+.stationDetails
+  h1
+    width: 80%
+    height: 33px
+    position: absolute
+    line-height: 33px
+    top: 46px
+    left: 0px
+    right: 0px
+    margin: 0 auto
+    color: #fff
+    text-align: center
+    +background-image(linear-gradient(#3a393c, #2c292e))
+    +border-radius(0px 0px 5px 5px)  
+    +box-shadow(inset -5 -1px 2px #fff, 0 0px 5px rgba(0, 0, 0, .5))
+  .map-container
+
+    img
+      max-width: 100%
+
+
+/* #Media Queries
+ *==================================================
+
+@media screen and (-webkit-device-pixel-ratio: 2)
+
+
+
+
+
+
+
+
+/* Smaller than standard 960 (devices and browsers)
+@media only screen and (min-width: 959px)
+  body
+    section
+      width: 100% !important
+
+/* Tablet Portrait size to standard 960 (devices and browsers)
+@media only screen and (min-width: 768px) and (max-width: 959px)
+  body
+    section
+      width: 100% 
+  
+  
+/* All Mobile Sizes (devices and browser)
+@media only screen and (max-width: 767px)
+  body
+    section
+      width: 100%
+
+/* Mobile Landscape Size to Tablet Portrait (devices and browsers)
+@media only screen and (min-width: 480px) and (max-width: 767px)
+
+
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers)
+@media only screen and (max-width: 479px)
+  body
+    section
+      position: absolute
+      width: 100%
+      height: 100%
+      margin-left: 0px
+
+      &#home
+        width: 78%  
+  
+
+      &.current
+        -webkit-transform: translate3d(0%,0%, 0) 
+        -moz-transform: translate3d(0%,0%,0)         
+
+
+
+  
+
