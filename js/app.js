@@ -4,11 +4,12 @@ console.log('app.js script loaded and started.');
 
 var FuelWatchMobile = FuelWatchMobile === undefined ? {} : FuelWatchMobile;
 
-// Quick and dirty function to print debug info to the page.
+/* Quick and dirty function to print debug info to the page.
 FuelWatchMobile.debugText = function(text) {
 	var textChunk = '<code>' + text + '</code><br />';
 	$('#home').append(textChunk);
 };
+*/
 
 FuelWatchMobile.locationSuccess = function(position) {
 	var lat = position.coords.latitude;
@@ -143,7 +144,7 @@ FuelWatchMobile.setContainerHeight = function(){
 };
 
 FuelWatchMobile.createResultsView = function() {
-	var resultListSection = '<section id="results"><header><h1>Results</h1><div class="back-button"><a href="#" title="Back" class="back button">Back</a></div></header><div class="container"><div class="content-wrapper"><ul class="resultList"></ul></div></div></section>';
+	var resultListSection ='<section id="results"><header><h1>Results</h1><div class="back-button"><a href="#" title="Back" class="back button">Back</a></div><div class="fuel-selector"><select id="fueltype" name="fueltype"><option value="1">ULP</option><option value="2">PULP</option><option value="4">Diesel</option><option value="5">LPG</option><option value="6">98RON</option><option value="7">B20</option></select></header><div class="container"><div class="content-wrapper"><ul class="resultList"></ul></div></div></section>';
 	$('section#search').after(resultListSection);
 	FuelWatchMobile.setContainerHeight();
 	setTimeout(function() { $('#results').toggleClass('current'); }, 200);
