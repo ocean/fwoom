@@ -4,3 +4,5 @@ js/app-min.js
 stylesheets/stylesheet.css
 
 index.html
+
+.sass-cache/
