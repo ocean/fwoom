@@ -4,12 +4,11 @@ console.log('app.js script loaded and started.');
 
 var FuelWatchMobile = FuelWatchMobile === undefined ? {} : FuelWatchMobile;
 
-/* Quick and dirty function to print debug info to the page.
+// Quick and dirty function to print debug info to the page.
 FuelWatchMobile.debugText = function(text) {
 	var textChunk = '<code>' + text + '</code><br />';
 	$('#home').append(textChunk);
 };
-*/
 
 FuelWatchMobile.locationSuccess = function(position) {
 	var lat = position.coords.latitude;
@@ -21,7 +20,7 @@ FuelWatchMobile.locationSuccess = function(position) {
 		FuelWatchMobile.geoCode(lat,lng);
 	} */
 	console.log('Geo results: ' + lat + ', ' + lng + ', ' + acc);
-	FuelWatchMobile.debugText('Geo results: ' + lat + ', ' + lng + ', ' + acc);
+	//FuelWatchMobile.debugText('Geo results: ' + lat + ', ' + lng + ', ' + acc);
 	FuelWatchMobile.geoCode(lat,lng,acc);
 };
 
@@ -80,7 +79,7 @@ FuelWatchMobile.haversine_optim = function(lat1, lon1, lat2, lon2) {
 
 FuelWatchMobile.locationFail = function(error) {
 	console.log('Location service not working.');
-	FuelWatchMobile.debugText('Location service failed.');
+	//FuelWatchMobile.debugText('Location service failed.');
 	switch(error.code) {
 		case error.TIMEOUT:
 			console.log('Connection timeout');
