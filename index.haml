@@ -20,6 +20,7 @@
   %script{:type => "text/javascript", :src => "js/app.js"}
 
 %body
+  %section#map    
   %section#home.current
     %nav
       %ul
@@ -60,5 +61,7 @@
           %input{:id => 'resultsType', :type => 'hidden', :value => 'list'}
           .button-container
             %button{:type => 'submit', :id => 'submitterator', :name => 'submitterator'} Find Fuel Prices
+
+  
 
 

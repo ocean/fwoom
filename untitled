@@ -1,0 +1,16 @@
+!!! 5
+%head
+  %meta{:charset => "utf-8"}
+  %meta{'http-equiv' => "X-UA-Compatible", :content => "IE=edge,chrome=1"}
+  %title Lawsons
+  %meta{:content => "", :name => "description"}
+  %meta{:content => "", :name => "author"}
+  %meta{:content => "True", :name => "HandheldFriendly"}
+  %meta{:content => "320", :name => "MobileOptimized"}
+  %meta{:content => "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no", :name => "viewport"}
+  %meta{:content => "yes", :name => "apple-mobile-web-app-capable"}
+  %meta{:content => "black", :name => "apple-mobile-web-app-status-bar-style"}
+  %link{:href => "stylesheets/stylesheet.css", :rel => "stylesheet"}
+
+%body
+  

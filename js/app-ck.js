@@ -187,7 +187,19 @@ FuelWatchMobile.getLocation = function() {
     }
 };
 
+function MapBg(position) {
+    var lat = position.coords.latitude, long = position.coords.longitude, center = "-" + Math.abs(lat - 4e-4) + ",%20" + Math.abs(long + .0028), mapCode = '<img src="http://maps.googleapis.com/maps/api/staticmap?center=' + center + '&zoom=16&size=320x480&scale=2&sensor=false"/>';
+    console.log(center);
+    setTimeout(function() {
+        $(mapCode).hide().appendTo("section#map");
+    }, 500);
+    setTimeout(function() {
+        $("section#map img").fadeIn();
+    }, 1e3);
+}
+
 $(document).ready(function() {
+    navigator.geolocation.getCurrentPosition(MapBg);
     $("#searchForm").submit(function() {
         var suburb, suburbEsc, fuelType, ftText, fuelTypeEsc, resultsType;
         console.log("Search form submitted.");
