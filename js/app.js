@@ -51,7 +51,7 @@ FuelWatchMobile.geoCode = function(lat,lng) {
 FuelWatchMobile.toRad = function(x) { return x * Math.PI / 180; };
 
 // Distance in kilometers between two points using the Haversine algo.
-FuelWatchMobile.haversine = function(lat1, lon1, lat2, lon2) {
+FuelWatchMobile.haversine_slower = function(lat1, lon1, lat2, lon2) {
 	var toRad = FuelWatchMobile.toRad();
   var R = 6371;
   var dLat  = this.toRad(lat2 - lat1);
@@ -64,7 +64,8 @@ FuelWatchMobile.haversine = function(lat1, lon1, lat2, lon2) {
   return Math.round(d);
  };
 
-FuelWatchMobile.haversine_optim = function(lat1, lon1, lat2, lon2) {
+// Haversine function optimised by someone on jsperf.com
+FuelWatchMobile.haversine = function(lat1, lon1, lat2, lon2) {
 	var R2 = 6371009 * 2;
 	var toRad = FuelWatchMobile.toRad();
 	var aLat = toRad(lat1);
@@ -267,19 +268,25 @@ FuelWatchMobile.getLocation = function(){
 	}
 };
 
-function MapBg(position) {
+FuelWatchMobile.MapBg = function(position){
     var lat = position.coords.latitude;
-    var long = position.coords.longitude;    
-    var center = '-' + Math.abs(lat-0.0004) + ',%20' + Math.abs(long+0.0028);
-    var mapCode = '<img src="http://maps.googleapis.com/maps/api/staticmap?center=' + center + '&zoom=16&size=320x480&scale=2&sensor=false"/>'      
+    var long = position.coords.longitude;
+    //var center = '-' + Math.abs(lat-0.0004) + ',%20' + Math.abs(long+0.0028);
+    var center = '-' + Math.abs(lat-0.0004) + ',' + Math.abs(long+0.0028);
+    var mapCode = '<img src="http://maps.googleapis.com/maps/api/staticmap?center=' + center + '&zoom=16&size=320x480&scale=2&sensor=true"/>';
     console.log(center);
     setTimeout(function() { $(mapCode).hide().appendTo('section#map'); }, 500);
     setTimeout(function() { $('section#map img').fadeIn(); }, 1000);
-    
-}
+};
 
 $(document).ready(function(){
-	navigator.geolocation.getCurrentPosition(MapBg);
+
+	// Naughty Cyrus code
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(FuelWatchMobile.MapBg, FuelWatchMobile.locationFail);
+	} else {
+		console.log('Location not supported in this browser.');
+	}
 
 	$('#searchForm').submit(function(){
 		console.log('Search form submitted.');
