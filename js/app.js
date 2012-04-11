@@ -268,13 +268,13 @@ FuelWatchMobile.getLocation = function(){
 	}
 };
 
-FuelWatchMobile.MapBg = function(position){
+FuelWatchMobile.mapBg = function(position){
     var lat = position.coords.latitude;
-    var long = position.coords.longitude;
-    //var center = '-' + Math.abs(lat-0.0004) + ',%20' + Math.abs(long+0.0028);
-    var center = '-' + Math.abs(lat-0.0004) + ',' + Math.abs(long+0.0028);
+    var lng = position.coords.longitude;
+    //var center = '-' + Math.abs(lat-0.0004) + ',' + Math.abs(lng+0.0028);
+    var center = (lat - 0.0004).toFixed(8) + ',' + (lng + 0.0028).toFixed(8);
     var mapCode = '<img src="http://maps.googleapis.com/maps/api/staticmap?center=' + center + '&zoom=16&size=320x480&scale=2&sensor=true"/>';
-    console.log(center);
+    console.log('BG map image centre:' + center);
     setTimeout(function() { $(mapCode).hide().appendTo('section#map'); }, 500);
     setTimeout(function() { $('section#map img').fadeIn(); }, 1000);
 };
@@ -283,7 +283,7 @@ $(document).ready(function(){
 
 	// Naughty Cyrus code
 	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(FuelWatchMobile.MapBg, FuelWatchMobile.locationFail);
+		navigator.geolocation.getCurrentPosition(FuelWatchMobile.mapBg, FuelWatchMobile.locationFail);
 	} else {
 		console.log('Location not supported in this browser.');
 	}
@@ -297,7 +297,7 @@ $(document).ready(function(){
 		console.log('Fuel Type: ' + fuelType + ' - ' + ftText);
 		var fuelTypeEsc = encodeURIComponent('&Product=' + fuelType);
 		$('#suburb').blur();
-		// Below code uses callback (final param) on getXMLData funciton to say which results type
+		// Below code uses callback (final param) on getXMLData function to say which results type
 		// to load up after executing and getting data.
 		var resultsType = $('#resultsType').val();
 		if (resultsType === 'list') {
