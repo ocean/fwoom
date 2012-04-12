@@ -166,7 +166,7 @@ FuelWatchMobile.buildResultsList = function(resultsArray) {
 	// Holder for HTML of results list.
 	var resultListHTMLString = '';
 	$.each(resultsArray,function(i,o){
-		var resultItem = '<li><a href="#/' + o.tradingnamecompressed + '" data-tradingname="' + o.tradingname + '" data-address="' + o.address + '" data-suburb="' + o.suburb + '" data-price="' + o.price + '" data-latitude="' + o.latitude + '" data-longitude="' + o.longitude + '" data-phone="' + o.phone + '"><span class="primary"><h3>' + o.tradingname + '</h3><h4>' + o.address + ', ' + o.suburb + '</h4></span><span class="secondary"><div class="button price">' + o.price + '<small> &#162;/l</small></div><div class="button distance">' + '2.4' + '<small>km</small>' + '</div><div class="button type">' + 'ULP' + '</div></a></li>';
+		var resultItem = '<li><a href="#/' + o.tradingnamecompressed + '" data-tradingname="' + o.tradingname + '" data-address="' + o.address + '" data-suburb="' + o.suburb + '" data-price="' + o.price + '" data-latitude="' + o.latitude + '" data-longitude="' + o.longitude + '" data-phone="' + o.phone + '"><span class="primary"><h3>' + o.tradingname + '</h3><h4>' + o.address + ', ' + o.suburb + '</h4></span><span class="secondary"><div class="button price">' + o.price + '<small> &#162;/l</small></div><div class="button distance"><i class="icon-road"></i>' + '2.4' + '<small>km</small>' + '</div><div class="button type"><i class="icon-tint"></i>' + 'ULP' + '</div></a></li>';
 		resultListHTMLString += resultItem;
 	});
 	$('ul.resultList').append(resultListHTMLString);
@@ -187,7 +187,7 @@ FuelWatchMobile.detailsView = function(details) {
 	var staticMapMarker = details.latitude + "," + details.longitude;
 	var mapImgSrc = staticMapURL + staticMapParams + staticMapMarker;
 	var mapLink = "http://maps.google.com.au/maps?q=" + staticMapMarker;
-	var detailsViewSection = '<section id="detailsView"><header><h1>Details</h1><div class="back-button"><a href="#" title="Back" class="button detailsBack">Back</a></div></header><div class="container"><div class="content-wrapper"><div class="map-container"><a href="'+ mapLink + '" title="Link to map of ' + details.tradingname + '"><img src="' + mapImgSrc + '" alt="Map of ' + details.tradingname + '"/></a></div><div class="price-distance-container"><span class="price"><h2>' + details.price + '</h2></span><span class="distance"><h2>' + details.price + '</h2></span></div><address><h3>' + details.tradingname + '</h3>' + details.address + ', ' + details.suburb + '<br />' + details.phone + '</address><div class="directions"><a href="' + mapLink + '" title="Link to map of ' + details.tradingname + '">Get directions</a></div></div></section>';
+	var detailsViewSection = '<section id="detailsView"><header><h1>Details</h1><div class="back-button"><a href="#" title="Back" class="button detailsBack">Back</a></div></header><div class="container"><div class="content-wrapper"><div class="map-container"><a href="'+ mapLink + '" title="Link to map of ' + details.tradingname + '"><img src="' + mapImgSrc + '" alt="Map of ' + details.tradingname + '"/></a></div><div class="price-distance-container"><span class="price"><h2>' + details.price + '<small> &#162;/l</small></h2></span><span class="distance"><h2><i class="icon-road"></i>' + '2.4' + '<small>km</small>' + '</h2></span></div><address><h3>' + details.tradingname + '</h3>' + details.address + ', ' + details.suburb + '<br />' + details.phone + '</address><div class="directions"><a href="' + mapLink + '" title="Link to map of ' + details.tradingname + '"><i class="icon-map-marker icon-large"></i>Get directions</a></div></div></section>';
 	$('section#results').after(detailsViewSection);
 	FuelWatchMobile.setContainerHeight();
 	setTimeout(function() { $('#detailsView').toggleClass('current'); }, 200);
@@ -338,6 +338,27 @@ $(document).ready(function(){
 		$('section#search').toggleClass('current');
 		return false;
 	});
+
+
+
+  $(".cb-enable").click(function(){
+      var parent = $(this).parents('.switch');
+      $('.cb-disable',parent).removeClass('selected');
+      $(this).addClass('selected');
+      $('.checkbox',parent).attr('checked', true);
+
+  });
+
+	$(".switch").click(function(){
+    $('.switch').toggleClass('toggle');
+  });    
+
+  $(".cb-disable").click(function(){
+      var parent = $(this).parents('.switch');
+      $('.cb-enable',parent).removeClass('selected');
+      $(this).addClass('selected');
+      $('.checkbox',parent).attr('checked', false);
+  });
 
 });
 
