@@ -339,19 +339,16 @@ $(document).ready(function(){
 		return false;
 	});
 
-
-
   $(".cb-enable").click(function(){
       var parent = $(this).parents('.switch');
       $('.cb-disable',parent).removeClass('selected');
       $(this).addClass('selected');
       $('.checkbox',parent).attr('checked', true);
-
   });
 
 	$(".switch").click(function(){
     $('.switch').toggleClass('toggle');
-  });    
+  });
 
   $(".cb-disable").click(function(){
       var parent = $(this).parents('.switch');
@@ -362,7 +359,8 @@ $(document).ready(function(){
 
 });
 
-window.addEventListener("load",function() {
+// window.addEventListener("load",function() {
+$(window).load(function(){
 	setTimeout(function(){
 		window.scrollTo(0, 1);
 	}, 0);
