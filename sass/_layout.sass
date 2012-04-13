@@ -27,7 +27,7 @@ body
     +experimental(transform, translate3d(120%,0%,0) scale(1))
     +experimental(transform-style, preserve-3d)
     +single-transition(all, 0.5s, ease-in-out)
-    +box-shadow(0 0px 5px rgba(black, .5))
+    
 
     &.current
       +experimental(transform, translate3d(0%,0%,0))
@@ -181,6 +181,7 @@ body
       margin-left: 0px
       +border-radius(5px 5px 5px 5px)
       +experimental(transform, translate3d(0%,0%,0))
+      +box-shadow(0 0px 5px rgba(black, .5))
       img.top-logo
         width: 60%
         max-width: 280px
@@ -252,7 +253,7 @@ body
             border-bottom: 0px
 
           a
-            float: left
+            display: block
             overflow: hidden
             padding: 10px 10px
 
@@ -381,15 +382,6 @@ body
         i
           margin-right: 8px
 
-  .fullsite
-    height: 22px
-    position: absolute
-    bottom: 0px
-    text-align: center
-    line-height: 22px
-    font-size: 12px
-    width: 100%
-    +background-image(linear-gradient(#2d82c3, #1d6c9a))
 
 
 
