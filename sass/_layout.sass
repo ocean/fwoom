@@ -27,7 +27,7 @@ body
     +experimental(transform, translate3d(120%,0%,0) scale(1))
     +experimental(transform-style, preserve-3d)
     +single-transition(all, 0.5s, ease-in-out)
-    +box-shadow(0 0px 5px rgba(black, .5))
+    
 
     &.current
       +experimental(transform, translate3d(0%,0%,0))
@@ -181,6 +181,7 @@ body
       margin-left: 0px
       +border-radius(5px 5px 5px 5px)
       +experimental(transform, translate3d(0%,0%,0))
+      +box-shadow(0 0px 5px rgba(black, .5))
       img.top-logo
         width: 60%
         max-width: 280px
@@ -252,7 +253,7 @@ body
             border-bottom: 0px
 
           a
-            float: left
+            display: block
             overflow: hidden
             padding: 10px 10px
 
@@ -381,15 +382,6 @@ body
         i
           margin-right: 8px
 
-  .fullsite
-    height: 22px
-    position: absolute
-    bottom: 0px
-    text-align: center
-    line-height: 22px
-    font-size: 12px
-    width: 100%
-    +background-image(linear-gradient(#2d82c3, #1d6c9a))
 
 
 
@@ -411,7 +403,7 @@ input:-moz-placeholder
   input
     &[type=checkbox]
       position: absolute
-      border: 1px solid #ccc
+      
       right: 10px
       top: 9px
       height: 32px
@@ -419,7 +411,8 @@ input:-moz-placeholder
       -webkit-appearance: none
       -webkit-border-radius: 4px
       background-image: url(../images/checkbox-background.png)
-      background-position: -52px 0
+      background-size: 145px, 32px
+      background-position: -56px 0
       background-repeat: no-repeat
       -webkit-animation-timing-function: ease-in-out
       -webkit-animation-duration: 400ms
@@ -430,7 +423,7 @@ input:-moz-placeholder
 
 @-webkit-keyframes checkbox-switch-on
   from
-    background-position: -52px 0
+    background-position: -56px 0
   to
     background-position: 0 0
 
@@ -439,7 +432,7 @@ input:-moz-placeholder
   from
     background-position: 0 0
   to
-    background-position: -52px 0
+    background-position: -56px 0
 
 
 

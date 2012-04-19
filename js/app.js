@@ -153,11 +153,11 @@ FuelWatchMobile.createResultsView = function() {
 		e.preventDefault();
 		if ($('section#search').hasClass('current')) {
 			$('section#results').toggleClass('current');
-			setTimeout(function() { $('#results').remove(); }, 300);
+			setTimeout(function() { $('#results').remove(); }, 600);
 		} else {
 			$('section#results').toggleClass('current');
 			$('#home').toggleClass('current');
-			setTimeout(function() { $('#results').remove(); }, 300);
+			setTimeout(function() { $('#results').remove(); }, 600);
 		}
 	});
 };
@@ -194,7 +194,7 @@ FuelWatchMobile.detailsView = function(details) {
 	$('a.detailsBack').click(function(e) {
 		e.preventDefault();
 		$('section#detailsView').toggleClass('current');
-		setTimeout(function() { $('#detailsView').remove(); }, 300);
+		setTimeout(function() { $('#detailsView').remove(); }, 600);
 	});
 };
 
@@ -207,7 +207,7 @@ FuelWatchMobile.createMapView = function() {
 		e.preventDefault();
 		$('section#map').toggleClass('current');
 		$('#home').toggleClass('current');
-		setTimeout(function() { $('#map').remove(); }, 300);
+		setTimeout(function() { $('#map').remove(); }, 600);
 	});
 };
 
